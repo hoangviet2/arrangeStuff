@@ -3,12 +3,18 @@
  */
 
 'use strict';
+import { getName } from "./firebase-config.js";
+var outsideName;
+wait(2*1000).then(() =>{
+  var returnVal = getName();
+  outsideName = returnVal;
+}); 
 
 let menu, animate;
-
+document.getElementById("user-Name").innerHTML = "Hello " + outsideName;
 (function () {
   // Initialize menu
-  //-----------------
+  //
 
   let layoutMenuEl = document.querySelectorAll('#layout-menu');
   layoutMenuEl.forEach(function (element) {
