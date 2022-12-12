@@ -93,9 +93,7 @@ function register () {
 	.then(cred => {
 	  //Declare user variable
 	  var user = auth.currentUser;
-  
 		//Add this user to Firebase Database
-
   
 	  // Create User data
 	  var user_data = {
@@ -141,7 +139,6 @@ function login () {
 	.then((userCredential) => {
 	  // Declare user variable
 	  var user = auth.currentUser;
-  
 	  // Add this user to Firebase Database
 	  var database_ref = ref(db);
   
