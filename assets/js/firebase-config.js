@@ -2,7 +2,7 @@
  // Import the functions you need from the SDKs you need
  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js';
  import { getAuth, onAuthStateChanged ,createUserWithEmailAndPassword , signInWithEmailAndPassword , updateProfile} from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
- import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"
+ import { getFirestore, collection, addDoc,setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"
  import { getDatabase, ref, set, child, push, update, get,onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"
  //const { validate } = require('email-validator');
  // TODO: Add SDKs for Firebase products that you want to use
@@ -24,33 +24,52 @@
  // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = getDatabase(app);
+const db = getFirestore(app);
 
-export function getName(){
-  onAuthStateChanged(auth, (user) => {
+export async function createUser(email, full_name, last_login,uid){
+  const docData = {
+    email : email,
+    full_name : full_name,
+    last_login : last_login
+  }
+  const docRef = await setDoc(doc(db, "users", uid),docData);
+  console.log("oke");
+}
+
+export function getUserName(){
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      //User is signed in, see docs for a list of available properties
-      //https://firebase.google.com/docs/reference/js/firebase.User
-      //console.log(uid);
-      get(child(ref(db), `users/${user.uid}`)).then(async (snapshot) => {
-        if (snapshot.exists()) {
-          console.log(10);
-          //return snapshot.val.
-          console.log(snapshot.val());
-          var name = snapshot.val().full_name;
-          return name;
-          _calback();
-        } else {
-          console.log("No data available");
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-      
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      console.log(user.displayName);
+      return user.displayName;
     } else {
       // User is signed out
       // ...
-      console.log("Djt con mje m");
+    }
+  });
+}
+
+export async function getUserInformation(){
+  //const currentUser = getcurrentAuth();
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      console.log(user.uid);
+      const docRef = doc(db, "users", String(user.uid));
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        return await docSnap.data();
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    } else {
+      // User is signed out
+      // ...
     }
   });
 }

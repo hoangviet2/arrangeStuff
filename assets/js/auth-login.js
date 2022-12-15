@@ -1,13 +1,10 @@
-/*
-		Designed by: SELECTO
-		Original image: https://dribbble.com/shots/5311359-Diprella-Login
-*/
-
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
  // Import the functions you need from the SDKs you need
  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js';
- import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
- import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"
- import { getDatabase, ref, set, child, push, update } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"
+ import { getAuth, onAuthStateChanged ,createUserWithEmailAndPassword , signInWithEmailAndPassword , updateProfile} from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
+ import { getFirestore, collection, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"
+ import { getDatabase, ref, set, child, push, update, get,onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"
+ import { createUser } from "./firebase-config.js";
  //const { validate } = require('email-validator');
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
@@ -15,21 +12,20 @@
  // Your web app's Firebase configuration
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
  const firebaseConfig = {
-   apiKey: "AIzaSyAxPdCCMub3xuVncOxQOka8qhPiQIU7Jf8",
-   authDomain: "arrangestuff.firebaseapp.com",
-   projectId: "arrangestuff",
-   storageBucket: "arrangestuff.appspot.com",
-   messagingSenderId: "126789076958",
-   appId: "1:126789076958:web:ad27c3c1bb2bbab9af3f4f",
-   measurementId: "G-38NCXJNFHR",
-   databaseURL: "https://arrangestuff-default-rtdb.asia-southeast1.firebasedatabase.app/"
- };
+  apiKey: "AIzaSyAxPdCCMub3xuVncOxQOka8qhPiQIU7Jf8",
+  authDomain: "arrangestuff.firebaseapp.com",
+  projectId: "arrangestuff",
+  storageBucket: "arrangestuff.appspot.com",
+  messagingSenderId: "126789076958",
+  appId: "1:126789076958:web:ad27c3c1bb2bbab9af3f4f",
+  measurementId: "G-38NCXJNFHR",
+  databaseURL: "https://arrangestuff-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
 
  // Initialize Firebase
- const app = initializeApp(firebaseConfig);
- const auth = getAuth();
- //const analytics = getAnalytics();
- const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore(app);
 
 let switchCtn = document.querySelector("#switch-cnt");
 let switchC1 = document.querySelector("#switch-c1");
@@ -101,16 +97,19 @@ function register () {
 		full_name : full_name,
 		last_login : Date.now()
 	  }
+	  var x = createUser(email,full_name,Date.now(),String(user.uid));
   
 	  // Push to Firebase Database
 	  //database_ref.collection("users").doc(user.uid).set(user_data);
-	  set(ref(db,"users/"+user.uid),user_data);
+	  //set(ref(db,"users/"+user.uid),user_data);
 	  //database_ref.child('users/' + user.uid).set(user_data)
   
 	  // DOne
-	   alert('User Created!!');
-	   window.location.href = "index.html";
-	   console.log(cred);
+	  while(x==undefined){
+		alert("user created!");
+	  }
+	  console.log(cred);
+	  //window.location.href = "index.html"
 	})
 	.catch((error) => {
 	  // Firebase will use this to alert of its errors
@@ -137,22 +136,22 @@ function login () {
   
 	signInWithEmailAndPassword(auth ,email, password)
 	.then((userCredential) => {
-	  // Declare user variable
-	  var user = auth.currentUser;
-	  // Add this user to Firebase Database
-	  var database_ref = ref(db);
+	//   // Declare user variable
+	//   var user = auth.currentUser;
+	//   // Add this user to Firebase Database
+	//   var database_ref = ref(db);
   
-	  // Create User data
-	  var user_data = {
-		last_login : Date.now()
-	  }
+	//   // Create User data
+	//   var user_data = {
+	// 	last_login : Date.now()
+	//   }
   
-	//   // Push to Firebase Database
-	  update(ref(db,'users/' + user.uid),user_data);
-	  //database_ref.child('users/' + user.uid).update(user_data)
+	// //   // Push to Firebase Database
+	//   update(ref(db,'users/' + user.uid),user_data);
+	//   //database_ref.child('users/' + user.uid).update(user_data)
 	  window.location.href = "index.html";
 	  // DOne
-	  	alert('User Logged In!!');
+	  alert('User Logged In!!');
 		
 	})
 	.catch((error) => {

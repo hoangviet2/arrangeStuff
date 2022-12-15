@@ -1,21 +1,19 @@
-/**
- * Main
- */
-
-'use strict';
-import { getName } from "./firebase-config.js";
-var outsideName;
-wait(2*1000).then(() =>{
-  var returnVal = getName();
-  outsideName = returnVal;
-}); 
-
+import { getUserInformation, getUserName } from "./firebase-config.js"
+let idiot = document.getElementById("user-Name");
 let menu, animate;
-document.getElementById("user-Name").innerHTML = "Hello " + outsideName;
+function fecthData(){
+  return new Promise(resolve => getUserInformation() );
+}
+async function put(){
+  idiot.innerHTML = '';
+  const data = await fecthData();
+  console.log(data);
+  idiot.innerHTML = 'Xin chào Hoàng Việt,';
+}
 (function () {
   // Initialize menu
   //
-
+  put();
   let layoutMenuEl = document.querySelectorAll('#layout-menu');
   layoutMenuEl.forEach(function (element) {
     menu = new Menu(element, {
