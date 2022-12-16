@@ -109,7 +109,7 @@ function register () {
   
 	  // DOne
 	   alert('User Created!!');
-	   window.location.href = "index.html";
+	   window.location.href = "to-do-list.html";
 	   console.log(cred);
 	})
 	.catch((error) => {
@@ -150,7 +150,7 @@ function login () {
 	//   // Push to Firebase Database
 	  update(ref(db,'users/' + user.uid),user_data);
 	  //database_ref.child('users/' + user.uid).update(user_data)
-	  window.location.href = "index.html";
+	  window.location.href = "to-do-list.html";
 	  // DOne
 	  	alert('User Logged In!!');
 		
