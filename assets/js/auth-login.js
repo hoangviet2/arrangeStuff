@@ -38,7 +38,7 @@ let allButtons = document.querySelectorAll(".submit");
 let signUpButons = document.getElementById("signUp");
 let signInButons = document.getElementById("signIn");
 let getButtons = (e) => e.preventDefault();
-
+// 
 let changeForm = (e) => {
 	switchCtn.classList.add("is-gx");
 	setTimeout(function () {
