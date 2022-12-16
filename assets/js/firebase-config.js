@@ -20,7 +20,7 @@
   measurementId: "G-38NCXJNFHR",
   databaseURL: "https://arrangestuff-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
-
+export var a = '';
  // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -34,6 +34,7 @@ export async function createUser(email, full_name, last_login,uid){
   }
   const docRef = await setDoc(doc(db, "users", uid),docData);
   console.log("oke");
+  return "HI";
 }
 
 export function getUserName(){
@@ -61,8 +62,13 @@ export async function getUserInformation(){
       const docSnap = await getDoc(docRef);
   
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        return await docSnap.data();
+        //console.log("Document data:", docSnap.data());
+        console.log("returned");
+        let abc = docSnap.data().full_name;
+        console.log(abc);
+        a = abc;
+        return abc;
+        //console.log("returned")
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

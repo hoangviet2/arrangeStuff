@@ -66,7 +66,18 @@ signInButons.addEventListener("click",login);
 signUpButons.addEventListener("click",register);
 window.addEventListener("load", mainF);
   // Set up our register function
-function register () {
+async function upload(email,full_name,Date,UID){
+	let result = await createUser(email,full_name,Date,UID);
+	return new Promise(resolve => setTimeout(resolve,5000,result));
+}
+
+async function put(email,full_name,Date,UID){
+	const data = await upload(email,full_name,Date,UID);
+	window.location.href = "index.html";
+	//idiot.innerHTML = data.full_name;
+}
+
+async function register () {
 	// Get all our input fields
 	let email = document.getElementById("email_signup").value;
 	let password = document.getElementById('password_signup').value;
@@ -83,33 +94,37 @@ function register () {
 	  alert('One or More Extra Fields is Outta Line!!');
 	  return
 	}
-   
+
+	// var x = async() => {
+	// 	return new Promise(resolve => setTimeout(resolve,5000,data));
+	// 	console.log(cred);
+	// 	alert("Created User");
+	
+	// }
 	// Move on with Auth
+	var UID = '';
 	createUserWithEmailAndPassword(auth, email, password)
 	.then(cred => {
 	  //Declare user variable
-	  var user = auth.currentUser;
+	  var  user =  auth.currentUser;
 		//Add this user to Firebase Database
-  
+		
 	  // Create User data
 	  var user_data = {
 		email : email,
 		full_name : full_name,
 		last_login : Date.now()
 	  }
-	  var x = createUser(email,full_name,Date.now(),String(user.uid));
-  
+	  //const x = await upload(email,full_name,Date.now(),string(user.uid));
+
+	  put(email,full_name,Date.now(),String(user.uid));
 	  // Push to Firebase Database
 	  //database_ref.collection("users").doc(user.uid).set(user_data);
 	  //set(ref(db,"users/"+user.uid),user_data);
 	  //database_ref.child('users/' + user.uid).set(user_data)
-  
+	  
 	  // DOne
-	  while(x==undefined){
-		alert("user created!");
-	  }
-	  console.log(cred);
-	  //window.location.href = "index.html"
+	  
 	})
 	.catch((error) => {
 	  // Firebase will use this to alert of its errors
