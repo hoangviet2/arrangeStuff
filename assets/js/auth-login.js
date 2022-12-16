@@ -123,8 +123,6 @@ async function register () {
 	  //set(ref(db,"users/"+user.uid),user_data);
 	  //database_ref.child('users/' + user.uid).set(user_data)
 	  
-	  // DOne
-	  
 	})
 	.catch((error) => {
 	  // Firebase will use this to alert of its errors
