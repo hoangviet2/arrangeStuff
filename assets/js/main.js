@@ -1,19 +1,19 @@
-import { getUserInformation, getUserName } from "./firebase-config.js"
+
 let idiot = document.getElementById("user-Name");
 let menu, animate;
-function fecthData(){
-  return new Promise(resolve => getUserInformation() );
-}
-async function put(){
-  idiot.innerHTML = '';
-  const data = await fecthData();
-  console.log(data);
-  idiot.innerHTML = 'Xin chào Hoàng Việt,';
-}
+// function fecthData(){
+//   return new Promise(resolve => getUserInformation() );
+// }
+// async function put(){
+//   idiot.innerHTML = '';
+//   const data = await fecthData();
+//   console.log(data);
+// }
+idiot.innerHTML = 'Xin chào Hoàng Việt,';
 (function () {
   // Initialize menu
   //
-  put();
+  //put();
   let layoutMenuEl = document.querySelectorAll('#layout-menu');
   layoutMenuEl.forEach(function (element) {
     menu = new Menu(element, {
