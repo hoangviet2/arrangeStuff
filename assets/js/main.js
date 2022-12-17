@@ -10,7 +10,7 @@ async function put(){
   idiot.innerHTML = '';
   const data = await fecthData();
   console.log(a);
-  idiot.innerHTML = 'Xin chào ' + a;
+  idiot.innerHTML = 'Chào mừng ' + a + ' 🎉';
   //idiot.innerHTML = data.full_name;
 }
 
