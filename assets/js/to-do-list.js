@@ -31,7 +31,6 @@ clear_text_box.addEventListener('click', function(e){
   form.task_description.value = '';
 });
 
-
 /*add todo btn click*/
 add_todo.addEventListener('click', function(e){
    e.preventDefault();
@@ -41,6 +40,7 @@ add_todo.addEventListener('click', function(e){
  		task_length = task_length + 1;
     total_task.innerHTML = "<i class='bx bx-task'></i> " + task_length;
  		generateTodo(todo_title,todo_description);
+
  		Form.reset();
  	}else{
  		alert("Sorry, you didn't type anything.");

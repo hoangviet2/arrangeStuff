@@ -1,6 +1,12 @@
-import {getUserInformation, a} from './firebase-config.js'
+import {getUserInformation, a, getCache} from './firebase-config.js'
+import {LocalUser, isEmpty} from './userInfo.js'
 let idiot = document.getElementById("user-Name");
+let reds = document.getElementById("Green Flag");
+let green = document.getElementById("Red Flag");
+let yellow = document.getElementById("Yellow Flag");
 let menu, animate;
+let decodedCookie = decodeURIComponent(document.cookie);
+console.log(decodedCookie);
 async function fecthData(){
   //let data = await getUserInformation();
   const data = await getUserInformation();
@@ -8,14 +14,16 @@ async function fecthData(){
 }
 async function put(){
   idiot.innerHTML = '';
+  reds.innerHTML = '';
+  green.innerHTML = '';
+  yellow.innerHTML = '';
   const data = await fecthData();
-  console.log(a);
-  idiot.innerHTML = 'Xin chào ' + a;
-  //idiot.innerHTML = data.full_name;
+  //console.log(a);
+  idiot.innerHTML = "Xin chào " + LocalUser.full_name;
+
 }
 
 put();
-
 (function () {
   
   // Initialize menu

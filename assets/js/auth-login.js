@@ -67,7 +67,7 @@ signUpButons.addEventListener("click",register);
 window.addEventListener("load", mainF);
   // Set up our register function
 async function upload(email,full_name,Date,UID){
-	let result = await createUser(email,full_name,Date,UID);
+	let result = await createUser(email,full_name,Date,UID,0,0,0);
 	return new Promise(resolve => setTimeout(resolve,5000,result));
 }
 
@@ -149,19 +149,6 @@ function login () {
   
 	signInWithEmailAndPassword(auth ,email, password)
 	.then((userCredential) => {
-	//   // Declare user variable
-	//   var user = auth.currentUser;
-	//   // Add this user to Firebase Database
-	//   var database_ref = ref(db);
-  
-	//   // Create User data
-	//   var user_data = {
-	// 	last_login : Date.now()
-	//   }
-  
-	// //   // Push to Firebase Database
-	//   update(ref(db,'users/' + user.uid),user_data);
-	//   //database_ref.child('users/' + user.uid).update(user_data)
 	  window.location.href = "index.html";
 	  // DOne
 	  alert('User Logged In!!');
