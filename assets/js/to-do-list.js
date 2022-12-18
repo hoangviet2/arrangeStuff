@@ -75,6 +75,7 @@ add_todo.addEventListener('click', function(e){
     deadline = deadline.split("-");
     var deadlines = new Date( deadline[2], deadline[1] - 1, deadline[0]);
     var convert = new Date(deadlines.getTime());
+    convert.setHours(0,0,0);
     generateTodo(todo_title,todo_description,convert.toDateString());
     var tasks = {
       end : deadlines.getTime(),
