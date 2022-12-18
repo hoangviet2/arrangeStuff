@@ -18,7 +18,7 @@ async function put(){
   greenFlag.innerHTML = '';
   const data = await fecthData();
   //console.log(a);
-  idiot.innerHTML = "Xin chào " + LocalUser.full_name;
+  idiot.innerHTML = "Xin chào " + LocalUser.full_name + " 🎉";
   redFlag.innerHTML = triples.reds;
   yellowFlag.innerHTML = triples.yellows;
   greenFlag.innerHTML = triples.greens;
