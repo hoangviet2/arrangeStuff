@@ -23,7 +23,8 @@ async function put(){
 put();
 
 function myFunction(item){
-  generateTodo(item.title,item.description);
+  var date = new Date(item.end);
+  generateTodo(item.title,item.description,String(date.toDateString()));
 }
 
 let floating_btn =document.querySelector('#floating_btn');
@@ -69,10 +70,12 @@ add_todo.addEventListener('click', function(e){
     if (todo_title.length && todo_description.length && todo_deadline.length){
  		task_length = task_length + 1;
     total_task.innerHTML = "<i class='bx bx-task'></i> " + task_length;
- 		generateTodo(todo_title,todo_description,todo_deadline);
+ 		
     var deadline = todo_deadline;
     deadline = deadline.split("-");
     var deadlines = new Date( deadline[2], deadline[1] - 1, deadline[0]);
+    var convert = new Date(deadlines.getTime());
+    generateTodo(todo_title,todo_description,convert.toDateString());
     var tasks = {
       end : deadlines.getTime(),
       title : todo_title,
