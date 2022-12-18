@@ -91,8 +91,8 @@ export async function getUserInformation(){
         let abc = docSnap.data().full_name;
         console.log(abc);
         a = abc;
-        LocalUser.task = docSnap.data().task;
-        UploadProfileLocal(docSnap.data().email,docSnap.data().full_name,docSnap.data().last_login);
+        //LocalUser.task = docSnap.data().task;
+        UploadProfileLocal(docSnap.data().email,docSnap.data().full_name,docSnap.data().last_login,docSnap.data().task);
         
         return abc;
         //console.log("returned")

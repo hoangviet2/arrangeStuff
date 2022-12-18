@@ -1,3 +1,31 @@
+import {updatedTodo} from './firebase-config.js'
+import {getUserInformation} from './firebase-config.js'
+import {LocalUser,tasks} from './userInfo.js'
+
+async function fecthData(){
+  //let data = await getUserInformation();
+  const data = await getUserInformation();
+  return new Promise(resolve => setTimeout(resolve,5000,data));
+}
+var task_length = 0;
+var localtask = [];
+async function put(){
+  const data = await fecthData();
+  //console.log(a);
+  var newTask = LocalUser.task;
+  console.log(newTask);
+  newTask.forEach(myFunction);
+  localtask = newTask;
+  total_task.innerHTML = "<i class='bx bx-task'></i> " + String(localtask.length);
+  //total_task = localtask.length;
+  task_length = localtask.length;
+}
+put();
+
+function myFunction(item){
+  generateTodo(item.title,item.description);
+}
+
 let floating_btn =document.querySelector('#floating_btn');
 let hide_menu =document.querySelector('#hide_menu');
 let add_todo =document.querySelector('#add_todo');
@@ -22,7 +50,7 @@ let total_task =document.querySelector('#total_task');
 let list =document.querySelectorAll('.display_task .task');
 let form =document.querySelector('.form');
 
-var task_length = list.length;
+
 
 /*clear text btn click*/
 clear_text_box.addEventListener('click', function(e){ 
@@ -38,10 +66,19 @@ add_todo.addEventListener('click', function(e){
    const todo_description = form.task_description.value.trim();
     if (todo_title.length && todo_description.length){
  		task_length = task_length + 1;
-    total_task.innerHTML = "<i class='bx bx-task'></i> " + task_length;
+    console.log(task_length);
+    //total_task.innerHTML = '';
+    total_task.innerHTML = "<i class='bx bx-task'></i> " + String(task_length);
  		generateTodo(todo_title,todo_description);
-
- 		Form.reset();
+    var tasks = {
+      end : Date.now(),
+      title : todo_title,
+      description : todo_description,
+      isDone : false
+    }
+    localtask.push(tasks);
+    updatedTodo(localtask);
+ 		//Form.reset();
  	}else{
  		alert("Sorry, you didn't type anything.");
  	}
@@ -51,8 +88,8 @@ add_todo.addEventListener('click', function(e){
 /*generate Todo*/
 const generateTodo = (todo_title,todo_description) => {
     const html = `<div class="task" id="todo_ ${task_length}">
-				<h2>${todo_title}</h2>
-				<p>${todo_description}</p>
+				<h2> ${todo_title}</h2>
+				<p> ${todo_description}</p>
 				<span class="delete_todo">x</span>
 			</div>`;
       if (task_length > 0) {
@@ -65,7 +102,10 @@ const generateTodo = (todo_title,todo_description) => {
 /*delete todo btn click*/
 display_task.addEventListener("click" , function(e){
   if(e.target.classList.contains("delete_todo")){
+    console.log(e.target.classList.contains("delete_todo"));
     e.target.parentElement.remove();
+    localtask.pop();
+    updatedTodo(localtask);
     task_length = task_length - 1;
     if (task_length==0) {
        default_text.style.opacity = '1';
