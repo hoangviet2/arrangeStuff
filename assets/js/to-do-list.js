@@ -57,6 +57,7 @@ clear_text_box.addEventListener('click', function(e){
   e.preventDefault();
   form.task_title.value = '';
   form.task_description.value = '';
+  form.task_deadline.value = '';
 });
 
 /*add todo btn click*/
@@ -64,21 +65,12 @@ add_todo.addEventListener('click', function(e){
    e.preventDefault();
    const todo_title = form.task_title.value.trim();
    const todo_description = form.task_description.value.trim();
-    if (todo_title.length && todo_description.length){
+   const todo_deadline = form.task_deadline.value.trim();
+    if (todo_title.length && todo_description.length && todo_deadline.length){
  		task_length = task_length + 1;
-    console.log(task_length);
-    //total_task.innerHTML = '';
-    total_task.innerHTML = "<i class='bx bx-task'></i> " + String(task_length);
- 		generateTodo(todo_title,todo_description);
-    var tasks = {
-      end : Date.now(),
-      title : todo_title,
-      description : todo_description,
-      isDone : false
-    }
-    localtask.push(tasks);
-    updatedTodo(localtask);
- 		//Form.reset();
+    total_task.innerHTML = "<i class='bx bx-task'></i> " + task_length;
+ 		generateTodo(todo_title,todo_description,todo_deadline);
+ 		Form.reset();
  	}else{
  		alert("Sorry, you didn't type anything.");
  	}
@@ -86,10 +78,11 @@ add_todo.addEventListener('click', function(e){
 
 
 /*generate Todo*/
-const generateTodo = (todo_title,todo_description) => {
+const generateTodo = (todo_title,todo_description,todo_deadline) => {
     const html = `<div class="task" id="todo_ ${task_length}">
-				<h2> ${todo_title}</h2>
-				<p> ${todo_description}</p>
+				<h2>${todo_title}</h2>
+				<p>${todo_description}</p>
+        <p>${todo_deadline}</p>
 				<span class="delete_todo">x</span>
 			</div>`;
       if (task_length > 0) {
