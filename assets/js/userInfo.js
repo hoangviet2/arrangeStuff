@@ -33,7 +33,7 @@ function myFunction(item) {
     
     if(diff <= 86400){
         red++;
-    }else if(dif <= 604800){
+    }else if(diff <= 604800){
         yellow++;
     }else{
         green++;

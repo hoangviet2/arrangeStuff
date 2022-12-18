@@ -70,6 +70,17 @@ add_todo.addEventListener('click', function(e){
  		task_length = task_length + 1;
     total_task.innerHTML = "<i class='bx bx-task'></i> " + task_length;
  		generateTodo(todo_title,todo_description,todo_deadline);
+    var deadline = todo_deadline;
+    deadline = deadline.split("-");
+    var deadlines = new Date( deadline[2], deadline[1] - 1, deadline[0]);
+    var tasks = {
+      end : deadlines.getTime(),
+      title : todo_title,
+      description : todo_description,
+      isDone : false
+    }
+    localtask.push(tasks);
+    updatedTodo(localtask);
  		Form.reset();
  	}else{
  		alert("Sorry, you didn't type anything.");
