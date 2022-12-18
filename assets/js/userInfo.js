@@ -30,10 +30,9 @@ var green = 0;
 
 function myFunction(item) {
     const diff = item.end - Date.now()
-    
-    if(diff <= 86400){
+    if(diff <= 8640000){
         red++;
-    }else if(diff <= 604800){
+    }else if(diff <= 604800000){
         yellow++;
     }else{
         green++;
